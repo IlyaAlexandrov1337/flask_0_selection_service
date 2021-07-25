@@ -4,22 +4,20 @@
   <main class="container mt-3">
     <h1 class="h1 text-center w-50 mx-auto mt-1 py-5 mb-4"><strong>Все преподаватели</strong></h1>
       <div class="row">
-        <div class="col-12 col-lg-10 offset-lg-1 m-auto">
+        <div class="col-12 col-lg-12 offset-lg-1 m-auto">
           <div class="card mb-4">
             <div class="card-body align-right">
-              <p class="lead float-left d-inline-block mt-2 mb-0"><strong>15 преподавателей в базе</strong></p>
-              <form action='/all' class="float-right d-inline-block" method="POST">
+              <p class="lead block mt-2 mb-3"><strong>{{teachers|length}} преподавателей в базе</strong></p>
+              <form action='/all' class="float-x d-inline-block" method="POST">
                 {{ form.csrf_token() }}
-                <div class="form-inline">
-                  <select class="custom-select my-1 mr-2" id="inlineFormCustomSelectPref">
+                <div class="form-row">
                     {% for option in form.options %}
-
+                      <div class="col-2 mx-4">
                         {{ option(class_="form-check-input") }}
                         {{ option.label(class_="form-check-label") }}
-
+                      </div>
                     {% endfor %}
-                  </select>
-                  {{form.submit(class_="btn btn-primary my-1")}}
+                  {{form.submit(class_="btn btn-primary my-1 px-4")}}
                 </div>
               </form>
             </div>
@@ -27,7 +25,7 @@
         </div>
       </div>
 
-        {% if target == ['rand'] %}
+        {% if target == 'rand' %}
           {% for teacher in teachers %}
             <div class="card mb-4">
               <div class="card-body">
@@ -43,7 +41,7 @@
               </div>
             </div>
           {% endfor %}
-        {% elif target == ['best_rat'] %}
+        {% elif target == 'best_rat' %}
           {% for teacher in teachers|sort(attribute="rating",reverse=True) %}
             <div class="card mb-4">
               <div class="card-body">
@@ -59,7 +57,7 @@
               </div>
             </div>
           {% endfor %}
-        {% elif target == ['more_price'] %}
+        {% elif target == 'more_price' %}
           {% for teacher in teachers|sort(attribute="price",reverse=True) %}
             <div class="card mb-4">
               <div class="card-body">

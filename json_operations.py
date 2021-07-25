@@ -8,7 +8,7 @@ def open_json(name):
 
 
 def add_info(name, data):
-    with open(f"{name}", "a", encoding='utf-8') as f:
+    with open(f"{name}", "w", encoding='utf-8') as f:
         json.dump(data, f)
 
 
