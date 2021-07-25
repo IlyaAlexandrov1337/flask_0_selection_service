@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block container %}
+  <main class="container mt-3">
+    <h1 class="h1 text-center w-50 mx-auto mt-1 py-5 mb-4"><strong>Все преподаватели</strong></h1>
+      <div class="row">
+        <div class="col-12 col-lg-10 offset-lg-1 m-auto">
+          <div class="card mb-4">
+            <div class="card-body align-right">
+              <p class="lead float-left d-inline-block mt-2 mb-0"><strong>15 преподавателей в базе</strong></p>
+              <form action='/all' class="float-right d-inline-block" method="POST">
+                {{ form.csrf_token() }}
+                <div class="form-inline">
+                  <select class="custom-select my-1 mr-2" id="inlineFormCustomSelectPref">
+                    {% for option in form.options %}
+
+                        {{ option(class_="form-check-input") }}
+                        {{ option.label(class_="form-check-label") }}
+
+                    {% endfor %}
+                  </select>
+                  {{form.submit(class_="btn btn-primary my-1")}}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        {% if target == ['rand'] %}
+          {% for teacher in teachers %}
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3"><img src={{teacher.picture}} class="img-fluid" alt=""></div>
+                  <div class="col-9">
+                    <p class="float-right">Рейтинг: {{teacher.rating}} Ставка: {{teacher.price}} / час</p>
+                    <h2 class="h4">{{teacher.name}}</h2>
+                    <p>{{teacher.about}}</p>
+                    <a href="profiles/{{teacher.id}}" class="btn btn-outline-primary btn-sm mr-3 mb-2">Показать информацию и расписание</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% elif target == ['best_rat'] %}
+          {% for teacher in teachers|sort(attribute="rating",reverse=True) %}
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3"><img src={{teacher.picture}} class="img-fluid" alt=""></div>
+                  <div class="col-9">
+                    <p class="float-right">Рейтинг: {{teacher.rating}} Ставка: {{teacher.price}} / час</p>
+                    <h2 class="h4">{{teacher.name}}</h2>
+                    <p>{{teacher.about}}</p>
+                    <a href="profiles/{{teacher.id}}" class="btn btn-outline-primary btn-sm mr-3 mb-2">Показать информацию и расписание</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% elif target == ['more_price'] %}
+          {% for teacher in teachers|sort(attribute="price",reverse=True) %}
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3"><img src={{teacher.picture}} class="img-fluid" alt=""></div>
+                  <div class="col-9">
+                    <p class="float-right">Рейтинг: {{teacher.rating}} Ставка: {{teacher.price}} / час</p>
+                    <h2 class="h4">{{teacher.name}}</h2>
+                    <p>{{teacher.about}}</p>
+                    <a href="profiles/{{teacher.id}}" class="btn btn-outline-primary btn-sm mr-3 mb-2">Показать информацию и расписание</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for teacher in teachers|sort(attribute="price") %}
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3"><img src={{teacher.picture}} class="img-fluid" alt=""></div>
+                  <div class="col-9">
+                    <p class="float-right">Рейтинг: {{teacher.rating}} Ставка: {{teacher.price}} / час</p>
+                    <h2 class="h4">{{teacher.name}}</h2>
+                    <p>{{teacher.about}}</p>
+                    <a href="profiles/{{teacher.id}}" class="btn btn-outline-primary btn-sm mr-3 mb-2">Показать информацию и расписание</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+    <h2 class="text-center mt-5 mb-3">Не нашли своего репетитора?</h2>
+    <p class="text-center mb-4">Расскажите, кто вам нужен и мы подберем его сами</p>
+    <div class="text-center pb-5">
+        <a href="/request" class="btn btn-primary">Заказать подбор</a>
+    </div>
+  </main>
+{% endblock %}
